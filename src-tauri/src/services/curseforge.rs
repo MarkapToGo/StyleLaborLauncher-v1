@@ -1,7 +1,7 @@
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
-const CURSEFORGE_API_BASE: &str = "http://localhost:3000/api";
+const CURSEFORGE_API_BASE: &str = "https://launcher-backend.stylelabor.de/api";
 
 pub struct CurseForgeClient {
     client: Client,

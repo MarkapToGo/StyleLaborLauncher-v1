@@ -109,7 +109,7 @@ async fn install_server_modpack(
     );
 
     // 1. Get Install Plan from Backend
-    let backend_url = "http://localhost:3000/api";
+    let backend_url = "https://launcher-backend.stylelabor.de/api";
     let url = format!("{}/modpacks/{}/install", backend_url, modpack_id);
 
     let client = reqwest::Client::new();
@@ -513,7 +513,7 @@ pub async fn update_modpack(
     );
 
     // 1. Get Install Plan
-    let backend_url = "http://localhost:3000/api";
+    let backend_url = "https://launcher-backend.stylelabor.de/api";
     let url = format!("{}/modpacks/{}/install", backend_url, modpack_id);
 
     let client = reqwest::Client::new();
@@ -765,7 +765,7 @@ pub async fn search_curseforge(
     _page: Option<u32>, // Ignored
 ) -> Result<Vec<ModpackInfo>, String> {
     // Replaced with: List Server Modpacks
-    let backend_url = "http://localhost:3000/api/modpacks";
+    let backend_url = "https://launcher-backend.stylelabor.de/api/modpacks";
     let client = reqwest::Client::new();
 
     let resp = client
