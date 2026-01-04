@@ -1,0 +1,6 @@
+# Ignore game-generated files to prevent dev server rebuild
+local/**
+config/**
+
+# Ignore crash assistant files specifically
+**/crash_assistant/**

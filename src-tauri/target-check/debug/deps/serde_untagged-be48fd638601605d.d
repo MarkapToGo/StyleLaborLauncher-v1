@@ -1,0 +1,11 @@
+E:\Development\StyleLabor\Launcherv1\src-tauri\target-check\debug\deps\serde_untagged-be48fd638601605d.d: C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\lib.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\any.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\error.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\int.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\map.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\seed.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\seq.rs
+
+E:\Development\StyleLabor\Launcherv1\src-tauri\target-check\debug\deps\libserde_untagged-be48fd638601605d.rmeta: C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\lib.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\any.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\error.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\int.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\map.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\seed.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\seq.rs
+
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\lib.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\any.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\error.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\int.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\map.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\seed.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-untagged-0.1.9\src\seq.rs:

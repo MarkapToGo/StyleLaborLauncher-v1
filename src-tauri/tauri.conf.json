@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "StyleLabor Launcher",
+    "version": "2026.1.3",
+    "identifier": "com.stylelabor.launcher",
+    "build": {
+        "beforeDevCommand": "npm run dev",
+        "devUrl": "http://localhost:1420",
+        "beforeBuildCommand": "npm run build",
+        "frontendDist": "../dist"
+    },
+    "app": {
+        "windows": [
+            {
+                "title": "StyleLabor Launcher",
+                "width": 1280,
+                "height": 800,
+                "minWidth": 1024,
+                "minHeight": 700,
+                "center": true,
+                "decorations": false,
+                "resizable": true,
+                "transparent": false
+            }
+        ],
+        "security": {
+            "csp": "default-src 'self' ipc: http://localhost:1420 'unsafe-inline' 'unsafe-eval'; img-src 'self' asset: https://cdn.modrinth.com https://cdn-raw.modrinth.com https: data: blob: http://asset.localhost stylelabor:; connect-src 'self' ipc: http://localhost:1420 http://localhost:3000 https://api.curseforge.com https://api.modrinth.com https://cdn.modrinth.com;",
+            "assetProtocol": {
+                "enable": true,
+                "scope": [
+                    "**"
+                ]
+            }
+        }
+    },
+    "bundle": {
+        "active": true,
+        "targets": [
+            "nsis",
+            "dmg"
+        ],
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ],
+        "windows": {
+            "nsis": {
+                "installMode": "currentUser"
+            }
+        },
+        "macOS": {
+            "minimumSystemVersion": "12.0"
+        }
+    },
+    "plugins": {
+        "shell": {
+            "open": true
+        },
+        "updater": {
+            "endpoints": [
+                "https://github.com/stylelabor/launcher/releases/latest/download/latest.json"
+            ],
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDA5ODRGMTE2RTRCNUM4RTQKUldUa3lMWGtGdkdFQ1QvNUhDdnNLZWZheERmMlZVditnV0czY1kvM2FGK3FGVVR4a2FMUWEyT1UK"
+        }
+    }
+}

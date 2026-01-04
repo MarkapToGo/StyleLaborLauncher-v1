@@ -1,0 +1,11 @@
+E:\Development\StyleLabor\Launcherv1\src-tauri\target-check2\debug\deps\const_oid-1d4e14ebfa3b22b3.d: C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\lib.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\checked.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\arcs.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\encoder.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\error.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\parser.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\../README.md
+
+E:\Development\StyleLabor\Launcherv1\src-tauri\target-check2\debug\deps\libconst_oid-1d4e14ebfa3b22b3.rmeta: C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\lib.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\checked.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\arcs.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\encoder.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\error.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\parser.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\../README.md
+
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\lib.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\checked.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\arcs.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\encoder.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\error.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\parser.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\const-oid-0.9.6\src\../README.md:

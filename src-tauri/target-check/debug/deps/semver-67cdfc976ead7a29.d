@@ -1,0 +1,11 @@
+E:\Development\StyleLabor\Launcherv1\src-tauri\target-check\debug\deps\semver-67cdfc976ead7a29.d: C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\lib.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\display.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\error.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\eval.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\identifier.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\impls.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\parse.rs
+
+E:\Development\StyleLabor\Launcherv1\src-tauri\target-check\debug\deps\libsemver-67cdfc976ead7a29.rmeta: C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\lib.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\display.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\error.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\eval.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\identifier.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\impls.rs C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\parse.rs
+
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\lib.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\display.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\error.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\eval.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\identifier.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\impls.rs:
+C:\Users\Marka\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\semver-1.0.27\src\parse.rs:
