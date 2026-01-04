@@ -1,0 +1,11 @@
+[
+    {
+        "version": "2026.1.3",
+        "date": "2026-01-03",
+        "downloads": {
+            "windows": "https://github.com/MarkapToGo/StyleLaborLauncher-v1/releases/download/v2026.1.3/StyleLabor%20Launcher_2026.1.3_x64-setup.exe",
+            "mac": "https://github.com/MarkapToGo/StyleLaborLauncher-v1/releases/download/v2026.1.3/StyleLabor%20Launcher_2026.1.3_universal.dmg"
+        },
+        "changelog": "## Initial Release 🚀\n- Cross-platform support (Windows & macOS)\n- Auto-updates enabled\n- Professional backend with caching"
+    }
+]

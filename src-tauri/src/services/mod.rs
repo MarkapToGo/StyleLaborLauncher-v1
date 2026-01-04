@@ -1,0 +1,12 @@
+pub mod auth;
+pub mod curseforge;
+pub mod discord;
+pub mod fabric;
+pub mod forge;
+pub mod java;
+pub mod log_analyzer;
+pub mod minecraft;
+pub mod modrinth;
+pub mod neoforge;
+pub mod quilt;
+pub mod screenshot_watcher;

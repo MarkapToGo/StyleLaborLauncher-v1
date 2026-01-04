@@ -1,0 +1,272 @@
+/* 
+ * Cross-platform Font Configuration
+ * Supports: macOS, Windows, Linux
+ * Priority: Local fonts -> CDN fallback -> System fonts
+ */
+
+/* CDN font imports as fallback (will be used if local fonts fail) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minecraft Ten - Local TTF font */
+@font-face {
+  font-family: "Minecraft Ten";
+  src: local("Minecraft Ten"),
+    url("/fonts/MinecraftTen-Font.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Minecraft Five Bold - Local OTF font */
+@font-face {
+  font-family: "Minecraft Five";
+  src: local("Minecraft Five"),
+    url("/fonts/minecraft-five-bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Poppins - Local woff2 fonts with CDN fallback */
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"),
+    local("Poppins-Regular"),
+    url("/fonts/Poppins-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins Medium"),
+    local("Poppins-Medium"),
+    url("/fonts/Poppins-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins SemiBold"),
+    local("Poppins-SemiBold"),
+    url("/fonts/Poppins-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --accent-color: 123, 108, 255;
+  --bg-primary: 13, 13, 13;
+  --bg-secondary: 20, 20, 20;
+  --bg-tertiary: 26, 26, 26;
+}
+
+.font-minecraft-ten {
+  font-family: "Minecraft Ten", "Minecraft", monospace;
+}
+
+.font-minecraft-five {
+  font-family: "Minecraft Five", "Minecraft", monospace;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: rgb(var(--bg-primary));
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar - minimal */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Utility classes */
+@layer components {
+  .glass {
+    background: rgba(20, 20, 20, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-light {
+    background: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-150;
+    @apply bg-accent hover:bg-accent-hover text-bg-primary;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-150;
+    @apply bg-bg-tertiary hover:bg-bg-hover text-white;
+    @apply border border-border hover:border-border-hover;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply px-3 py-2 rounded-md font-medium transition-all duration-150;
+    @apply bg-transparent hover:bg-bg-tertiary text-text-secondary hover:text-white;
+    @apply active:scale-[0.98];
+  }
+
+  .card {
+    @apply bg-bg-secondary rounded-lg border border-border;
+    @apply transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:border-border-hover hover:bg-bg-tertiary;
+  }
+
+  .input {
+    @apply w-full px-3 py-2 rounded-md;
+    @apply bg-bg-tertiary border border-border;
+    @apply text-white placeholder-text-muted;
+    @apply focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30;
+    @apply transition-all duration-150;
+  }
+
+  .input-sm {
+    @apply px-2.5 py-1.5 text-sm;
+  }
+
+  /* Toggle switch */
+  .toggle {
+    @apply relative w-10 h-5 bg-bg-tertiary rounded-full cursor-pointer transition-colors duration-200;
+  }
+
+  .toggle-active {
+    @apply bg-accent;
+  }
+
+  .toggle-knob {
+    @apply absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-200;
+  }
+
+  .toggle-active .toggle-knob {
+    @apply translate-x-5;
+  }
+
+  /* Sidebar nav item */
+  .nav-item {
+    @apply flex items-center justify-center w-10 h-10 rounded-lg;
+    @apply text-text-muted hover:text-white hover:bg-bg-tertiary;
+    @apply transition-all duration-150 cursor-pointer;
+  }
+
+  .nav-item-active {
+    @apply text-accent bg-accent/10;
+  }
+
+  /* Badge */
+  .badge {
+    @apply px-2 py-0.5 text-xs font-medium rounded;
+  }
+
+  .badge-success {
+    @apply bg-accent/15 text-accent;
+  }
+
+  .badge-warning {
+    @apply bg-warning/15 text-warning;
+  }
+
+  .badge-error {
+    @apply bg-error/15 text-error;
+  }
+
+  .badge-muted {
+    @apply bg-bg-tertiary text-text-secondary;
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-in {
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+
+  .slide-in {
+    animation: slideUp 0.3s ease-out forwards;
+  }
+}
+
+/* Progress bar */
+.progress-bar {
+  @apply h-full bg-accent rounded-full transition-all duration-300;
+}
+
+.progress-track {
+  @apply w-full h-1 bg-bg-tertiary rounded-full overflow-hidden;
+}
+
+/* Minecraft-style pixelated rendering for skin */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply absolute left-full ml-2 px-2 py-1 text-xs font-medium;
+  @apply bg-bg-secondary border border-border rounded-md shadow-dropdown;
+  @apply text-white whitespace-nowrap z-50;
+  @apply opacity-0 pointer-events-none transition-opacity duration-150;
+}
+
+.tooltip-visible {
+  @apply opacity-100;
+}
+
+/* Subtle separator */
+.separator {
+  @apply w-full h-px bg-border;
+}

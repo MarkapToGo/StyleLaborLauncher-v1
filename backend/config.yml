@@ -1,0 +1,103 @@
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║                      MODPACK SERVER CONFIGURATION                          ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+#
+# This file defines the modpacks available in your launcher.
+# Supported sources: curseforge, modrinth, vanilla
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+# TEMPLATES - Copy and customize these for your modpacks
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# CURSEFORGE MODPACK TEMPLATE
+# ─────────────────────────────────────────────────────────────────────────────
+# - id: 123456                    # CurseForge project ID (from URL)
+#   name: "My CurseForge Pack"    # Display name
+#   source: curseforge            # Source type
+#   fileId: 7654321               # Specific file ID (optional, uses latest if omitted)
+#   alternativeImage: "https://..."  # Custom image URL to override default icon (optional)
+#   serverIp: "play.myserver.com" # Default server IP (optional, format: "ip" or "ip:port")
+#   extraMods:                    # Additional mods to include (optional)
+#     - type: curseforge
+#       projectId: 251244
+#       name: "CMDCam"
+#     - type: modrinth
+#       projectId: "sodium"       # Modrinth slug or project ID
+#       name: "Sodium"
+#     - type: direct
+#       url: "https://example.com/mod.jar"
+#       fileName: "custom-mod.jar"
+#       name: "Custom Mod"
+#   removeFiles:                  # Files to exclude from the pack (e.g. incompatible mods)
+#     - "drippyloadingscreen"
+#     - "some-other-bad-mod"
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# MODRINTH MODPACK TEMPLATE
+# ─────────────────────────────────────────────────────────────────────────────
+# - id: "project-slug"            # Modrinth project slug or ID
+#   name: "My Modrinth Pack"      # Display name
+#   source: modrinth              # Source type
+#   versionId: "abc123"           # Specific version ID (optional, uses latest if omitted)
+#   alternativeImage: "https://..."  # Custom image URL to override default icon (optional)
+#   serverIp: "play.myserver.com" # Default server IP (optional, format: "ip" or "ip:port")
+#   extraMods:                    # Additional mods to include (optional)
+#     - type: modrinth
+#       projectId: "iris"
+#       name: "Iris Shaders"
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# VANILLA MINECRAFT TEMPLATE
+# ─────────────────────────────────────────────────────────────────────────────
+# - id: "vanilla-1.21.1"          # Unique identifier for this pack
+#   name: "Vanilla 1.21.1"        # Display name
+#   source: vanilla               # Source type
+#   minecraftVersion: "1.21.1"    # Minecraft version to use
+#   icon: "https://..."           # Optional custom icon URL
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+modpacks:
+  # ═══════════════════════════════════════════════════════════════════════════
+  # CURSEFORGE MODPACKS
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  - id: 925200
+    name: "All the Mods 10"
+    source: curseforge
+    fileId: 7361423
+    extraMods:
+      - type: curseforge
+        projectId: 251244
+        name: "CMDCam"
+      - type: curseforge
+        projectId: 257814
+        name: "CreativeCore"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # MODRINTH MODPACKS (Examples - uncomment to use)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  - id: "remarkably"
+    name: "Remarkably Optimized"
+    source: modrinth
+    versionId: "1.15.6"
+
+  # - id: "adrenaline"
+  #   name: "Adrenaline"
+  #   source: modrinth
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # VANILLA MINECRAFT (Examples - uncomment to use)
+  # ═══════════════════════════════════════════════════════════════════════════
+
+  # - id: "vanilla-1.21.1"
+  #   name: "Vanilla 1.21.1"
+  #   source: vanilla
+  #   minecraftVersion: "1.21.1"
+
+  # - id: "vanilla-1.20.4"
+  #   name: "Vanilla 1.20.4"
+  #   source: vanilla
+  #   minecraftVersion: "1.20.4"
