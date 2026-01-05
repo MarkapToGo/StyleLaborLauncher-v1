@@ -1,6 +1,6 @@
 [package]
 name = "stylelabor-launcher"
-version = "2026.1.4"
+version = "2026.1.5"
 description = "A custom Minecraft launcher"
 authors = ["StyleLabor"]
 edition = "2021"
