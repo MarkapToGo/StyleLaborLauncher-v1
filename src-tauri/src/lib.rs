@@ -160,6 +160,7 @@ pub fn run() {
             // Launcher commands
             launcher::open_folder,
             launcher::get_game_directory,
+            launcher::copy_to_clipboard,
             // Java commands
             java::install_java_versions,
             // User mod commands
@@ -175,6 +176,7 @@ pub fn run() {
             logs::list_profile_logs,
             logs::read_log_file,
             logs::open_logs_folder,
+            logs::open_log_analyzer,
             // Discord Rich Presence commands
             discord::discord_set_presence,
             discord::discord_clear_presence,

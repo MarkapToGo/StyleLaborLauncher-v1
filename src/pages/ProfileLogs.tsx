@@ -20,11 +20,11 @@ export function ProfileLogs() {
   const [isLoadingContent, setIsLoadingContent] = useState(false);
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
   const [collapsedSections, setCollapsedSections] = useState<Set<string>>(new Set());
-  
+
   // Log viewer controls
   const [searchQuery, setSearchQuery] = useState('');
   const [levelFilter, setLevelFilter] = useState<'ALL' | 'INFO' | 'WARN' | 'ERROR'>('ALL');
-  
+
   const { error, success } = useToastStore();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -147,24 +147,24 @@ export function ProfileLogs() {
   const filteredLogLines = useMemo(() => {
     if (!logContent) return [];
     let lines = logContent.split('\n');
-    
+
     // Apply level filter
     if (levelFilter !== 'ALL') {
       lines = lines.filter(line => matchesFilter(line));
     }
-    
+
     // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       lines = lines.filter(line => line.toLowerCase().includes(query));
     }
-    
+
     return lines;
   }, [logContent, levelFilter, searchQuery]);
 
-  const totalFiles = logsResult 
-    ? logsResult.priority_files.length + logsResult.crash_reports.length + logsResult.other_files.length + 
-      logsResult.folders.reduce((sum, f) => sum + f.files.length, 0)
+  const totalFiles = logsResult
+    ? logsResult.priority_files.length + logsResult.crash_reports.length + logsResult.other_files.length +
+    logsResult.folders.reduce((sum, f) => sum + f.files.length, 0)
     : 0;
 
   const scrollToBottom = () => {
@@ -203,7 +203,7 @@ export function ProfileLogs() {
 
   const renderFolder = (folder: LogFolder) => {
     const isExpanded = expandedFolders.has(folder.name);
-    
+
     return (
       <div key={folder.name}>
         <button
@@ -250,7 +250,7 @@ export function ProfileLogs() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
@@ -260,16 +260,16 @@ export function ProfileLogs() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => navigate(`/profiles/${profileId}`)}
             className="text-text-secondary hover:text-white pl-0"
             leftIcon={<ArrowLeft className="w-4 h-4" />}
           >
             Back to Profile
           </Button>
-          
+
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-accent/10 border border-accent/20">
               <FileText className="w-5 h-5 text-accent" />
@@ -280,7 +280,7 @@ export function ProfileLogs() {
             </div>
           </div>
         </div>
-        
+
         <Button
           size="sm"
           variant="secondary"
@@ -340,14 +340,14 @@ export function ProfileLogs() {
                     </div>
                   </>
                 )}
-                
+
                 {/* Folders (kubejs, etc.) - Collapsible */}
                 {logsResult.folders.length > 0 && (
                   <>
-                    <SectionHeader 
-                      label="Folders" 
-                      sectionKey="folders" 
-                      count={logsResult.folders.reduce((sum, f) => sum + f.files.length, 0)} 
+                    <SectionHeader
+                      label="Folders"
+                      sectionKey="folders"
+                      count={logsResult.folders.reduce((sum, f) => sum + f.files.length, 0)}
                     />
                     {!collapsedSections.has('folders') && (
                       <div>
@@ -356,14 +356,14 @@ export function ProfileLogs() {
                     )}
                   </>
                 )}
-                
+
                 {/* Other Files - Collapsible */}
                 {logsResult.other_files.length > 0 && (
                   <>
-                    <SectionHeader 
-                      label="Other Logs" 
-                      sectionKey="other" 
-                      count={logsResult.other_files.length} 
+                    <SectionHeader
+                      label="Other Logs"
+                      sectionKey="other"
+                      count={logsResult.other_files.length}
                     />
                     {!collapsedSections.has('other') && (
                       <div className="divide-y divide-border/30">
@@ -391,7 +391,7 @@ export function ProfileLogs() {
                 </span>
               )}
             </div>
-            
+
             {/* Controls */}
             {selectedLog && (
               <div className="flex items-center gap-2">
@@ -406,14 +406,14 @@ export function ProfileLogs() {
                     className="w-full h-7 bg-bg-tertiary border border-border/50 rounded pl-7 pr-2 text-xs text-white focus:outline-none focus:border-accent/50 placeholder:text-text-muted/50"
                   />
                 </div>
-                
+
                 {/* Level Filters */}
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => setLevelFilter('ALL')}
                     className={cn(
                       "p-1.5 rounded transition-colors border",
-                      levelFilter === 'ALL' ? "bg-accent text-white border-accent" : "bg-bg-tertiary text-text-muted border-border/50 hover:text-white"
+                      levelFilter === 'ALL' ? "bg-accent text-white border-accent" : "bg-bg-tertiary text-white border-border/50 hover:text-white"
                     )}
                     title="All"
                   >
@@ -423,7 +423,7 @@ export function ProfileLogs() {
                     onClick={() => setLevelFilter('INFO')}
                     className={cn(
                       "p-1.5 rounded transition-colors border",
-                      levelFilter === 'INFO' ? "bg-blue-500 text-white border-blue-500" : "bg-bg-tertiary text-text-muted border-border/50 hover:text-blue-400"
+                      levelFilter === 'INFO' ? "bg-blue-500 text-white border-blue-500" : "bg-bg-tertiary text-white border-border/50 hover:text-blue-400"
                     )}
                     title="Info"
                   >
@@ -433,7 +433,7 @@ export function ProfileLogs() {
                     onClick={() => setLevelFilter('WARN')}
                     className={cn(
                       "p-1.5 rounded transition-colors border",
-                      levelFilter === 'WARN' ? "bg-yellow-500 text-white border-yellow-500" : "bg-bg-tertiary text-text-muted border-border/50 hover:text-yellow-400"
+                      levelFilter === 'WARN' ? "bg-yellow-500 text-white border-yellow-500" : "bg-bg-tertiary text-white border-border/50 hover:text-yellow-400"
                     )}
                     title="Warnings"
                   >
@@ -443,33 +443,33 @@ export function ProfileLogs() {
                     onClick={() => setLevelFilter('ERROR')}
                     className={cn(
                       "p-1.5 rounded transition-colors border",
-                      levelFilter === 'ERROR' ? "bg-red-500 text-white border-red-500" : "bg-bg-tertiary text-text-muted border-border/50 hover:text-red-400"
+                      levelFilter === 'ERROR' ? "bg-red-500 text-white border-red-500" : "bg-bg-tertiary text-white border-border/50 hover:text-red-400"
                     )}
                     title="Errors"
                   >
                     <XCircle className="w-3.5 h-3.5" />
                   </button>
                 </div>
-                
+
                 <div className="w-px h-5 bg-border/50" />
-                
+
                 {/* Scroll to Bottom */}
                 <button
                   onClick={scrollToBottom}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors border bg-bg-tertiary text-text-muted border-border/50 hover:text-white text-xs"
+                  className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors border bg-bg-tertiary text-white border-border/50 hover:text-white text-xs"
                   title="Scroll to Bottom"
                 >
                   <ArrowDownToLine className="w-3.5 h-3.5" />
                   <span>Bottom</span>
                 </button>
-                
+
                 {/* Upload to mclo.gs */}
                 <button
                   onClick={handleUploadToMcLogs}
                   disabled={isUploading || !logContent}
                   className={cn(
                     "flex items-center gap-1.5 px-2 py-1 rounded transition-colors border text-xs",
-                    isUploading ? "bg-accent/20 text-accent border-accent/50" : "bg-bg-tertiary text-text-muted border-border/50 hover:text-white",
+                    isUploading ? "bg-accent/20 text-accent border-accent/50" : "bg-bg-tertiary text-white border-border/50 hover:text-white",
                     !logContent && "opacity-50 cursor-not-allowed"
                   )}
                   title="Upload to mclo.gs"
@@ -481,22 +481,50 @@ export function ProfileLogs() {
                   )}
                   <span>{isUploading ? 'Uploading...' : 'MCLogs'}</span>
                 </button>
-                
+
                 {/* Analyze button */}
                 <button
                   onClick={async () => {
-                    const { openUrl } = await import('@tauri-apps/plugin-opener');
-                    await openUrl('https://digyourselfout.app');
+                    if (!logContent) return;
+
+                    // Upload if not already uploaded (we don't track state persistent here easily without return value, 
+                    // so we'll just re-upload or upload fresh. A more robust way would be to track returning URL)
+                    // For now, let's just trigger the upload logic, but we need the URL.
+                    // Let's reimplement a quick inline version or modify handleUploadToMcLogs                    
+                    setIsUploading(true);
+                    try {
+                      // Re-using mclogs upload logic
+                      const url = await mclogs.upload(logContent);
+
+                      // Copy to clipboard internally just in case they want it
+                      await import('../lib/tauri').then(m => m.utils.copyToClipboard(url));
+
+                      success('Analyzing Log', 'Opening analyzer window...');
+
+                      // Open In-App Analyzer Window
+                      const { utils } = await import('../lib/tauri');
+                      await utils.openAnalyzerWindow(url);
+
+                    } catch (err) {
+                      error('Analysis Failed', 'Could not upload log: ' + String(err));
+                    } finally {
+                      setIsUploading(false);
+                    }
                   }}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors border bg-bg-tertiary text-text-muted border-border/50 hover:text-white text-xs"
+                  disabled={isUploading || !logContent}
+                  className={cn(
+                    "flex items-center gap-1.5 px-2 py-1 rounded transition-colors border text-xs",
+                    isUploading ? "bg-accent/20 text-accent border-accent/50" : "bg-bg-tertiary text-white border-border/50 hover:text-white",
+                    !logContent && "opacity-50 cursor-not-allowed"
+                  )}
                   title="Open Dig Yourself Out analyzer"
                 >
                   <Search className="w-3.5 h-3.5" />
-                  <span>Analyze</span>
+                  <span>{isUploading ? 'Preparing...' : 'Analyze'}</span>
                 </button>
-                
+
                 <div className="w-px h-5 bg-border/50" />
-                
+
                 {/* Open Folder button */}
                 <button
                   onClick={async () => {
@@ -516,7 +544,7 @@ export function ProfileLogs() {
               </div>
             )}
           </div>
-          
+
           <CardContent className="flex-1 p-0 overflow-hidden bg-bg-tertiary/30">
             {isLoadingContent ? (
               <div className="flex flex-col items-center justify-center h-full text-text-muted gap-2">
@@ -535,7 +563,7 @@ export function ProfileLogs() {
                 totalCount={filteredLogLines.length}
                 className="h-full"
                 itemContent={(index, line) => (
-                  <div 
+                  <div
                     className={cn(
                       "flex px-4 py-0.5 font-mono text-xs hover:bg-white/5",
                       getLineColor(line),

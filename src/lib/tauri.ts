@@ -115,6 +115,17 @@ export const logs = {
 export const utils = {
   openFolder: (path: string) => invoke<void>('open_folder', { path }),
   getGameDirectory: () => invoke<string>('get_game_directory'),
+  copyToClipboard: (text: string) => invoke<void>('copy_to_clipboard', { text }),
+  openAnalyzerWindow: async (logUrl: string): Promise<boolean> => {
+    try {
+      console.log('[Analyzer] Invoking Rust command open_log_analyzer with URL:', logUrl);
+      await invoke('open_log_analyzer', { logUrl });
+      return true;
+    } catch (err) {
+      console.error('[Analyzer] Failed to open analyzer:', err);
+      return false;
+    }
+  }
 };
 
 // Discord Rich Presence commands
@@ -131,5 +142,3 @@ export const discord = {
 export const monitor = {
   getStats: (_pid: number) => Promise.resolve({ cpu_usage: 0, memory_usage: 0 }),
 };
-
-

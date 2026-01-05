@@ -22,7 +22,7 @@ export function Layout() {
         {/* Page content */}
         <main
           className={cn(
-            "flex-1 overflow-y-auto",
+            "flex-1 overflow-y-auto scroll-smooth-container",
             isFullWidth ? "p-0" : "p-5"
           )}
           data-tauri-drag-region="false"

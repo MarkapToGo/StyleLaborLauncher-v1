@@ -246,3 +246,239 @@ pub async fn open_logs_folder(profile_id: String) -> Result<(), String> {
     crate::utils::open_file_explorer(logs_dir.to_string_lossy().as_ref())
         .map_err(|e| format!("Failed to open logs folder: {}", e))
 }
+
+#[tauri::command]
+pub async fn open_log_analyzer(app: tauri::AppHandle, log_url: String) -> Result<(), String> {
+    use tauri::{WebviewUrl, WebviewWindowBuilder};
+
+    let initialization_script = format!(
+        r#"
+        (function() {{
+          // DEBUG: Immediate alert to verify injection
+          // alert("Log Analyzer: Injection Active (Rust)");
+
+          const LOG_URL = "{}";
+          const ENABLE_VISUAL_LOGGER = false; // Toggle to true to see red debug overlay
+          
+          let log = (msg, type) => {{}}; // No-op by default
+
+          if (ENABLE_VISUAL_LOGGER) {{
+              // Create visual logger
+              const logContainer = document.createElement('div');
+              logContainer.style.position = 'fixed';
+              logContainer.style.bottom = '0';
+              logContainer.style.left = '0';
+              logContainer.style.width = '100%';
+              logContainer.style.height = '200px';
+              logContainer.style.backgroundColor = 'rgba(50, 0, 0, 0.9)'; // Reddish for visibility
+              logContainer.style.borderTop = '2px solid #ff0000';
+              logContainer.style.color = '#fff';
+              logContainer.style.overflowY = 'scroll';
+              logContainer.style.zIndex = '2147483647'; // Max z-index
+              logContainer.style.padding = '10px';
+              logContainer.style.fontFamily = 'monospace';
+              logContainer.style.fontSize = '14px';
+              logContainer.style.pointerEvents = 'none'; // Click through
+              
+              // Append to documentElement to be as high as possible, but body is safer for some sites
+              // Try both or prefer body if available, else root
+              if (document.body) {{
+                  document.body.appendChild(logContainer);
+              }} else {{
+                  document.documentElement.appendChild(logContainer);
+              }}
+
+              log = function(msg, type = 'info') {{
+                const el = document.createElement('div');
+                el.textContent = `[${{new Date().toLocaleTimeString()}}] [${{type.toUpperCase()}}] ${{msg}}`;
+                if (type === 'error') el.style.color = '#ff6b6b';
+                if (type === 'warn') el.style.color = '#feca57';
+                logContainer.appendChild(el);
+                logContainer.scrollTop = logContainer.scrollHeight;
+              }};
+
+              // Override console
+              console.log = (...args) => log(args.join(' '), 'info');
+              console.warn = (...args) => log(args.join(' '), 'warn');
+              console.error = (...args) => log(args.join(' '), 'error');
+          }}
+
+          console.log("Analyzer Automation: Started for", LOG_URL);
+
+          function waitFor(selector, textContent, timeout = 15000) {{
+            return new Promise((resolve, reject) => {{
+              const start = Date.now();
+              const interval = setInterval(() => {{
+                if (Date.now() - start > timeout) {{
+                  clearInterval(interval);
+                  reject(new Error("Timeout waiting for " + selector + (textContent ? " with text " + textContent : "")));
+                  return;
+                }}
+                
+                const elements = document.querySelectorAll(selector);
+                for (const el of elements) {{
+                  if (!textContent) {{
+                     clearInterval(interval);
+                     resolve(el);
+                     return;
+                  }}
+                  
+                  // Case-insensitive and trimmed check
+                  const elText = (el.textContent || '').trim().toLowerCase();
+                  const targetText = textContent.toLowerCase();
+                  
+                  if (elText.includes(targetText)) {{
+                    clearInterval(interval);
+                    resolve(el);
+                    return;
+                  }}
+                }}
+              }}, 200);
+            }});
+          }}
+
+          async function automate() {{
+            try {{
+              console.log("Analyzer Automation: Waiting for page to load...");
+              console.log("Analyzer Automation: Waiting for page to load (dynamic poll)...");
+              
+              // Dynamic wait: Check every 100ms for document complete event or just proceed to element search
+              const waitStart = Date.now();
+              while (document.readyState !== 'complete' && (Date.now() - waitStart < 5000)) {{
+                  await new Promise(r => setTimeout(r, 100));
+              }}
+              console.log(`Analyzer Automation: Page ready (took ${{Date.now() - waitStart}}ms).`);
+              
+              console.log("Analyzer Automation: Looking for 'Upload from URL' button...");
+              
+              // Improved selector
+              let uploadBtn = null;
+              try {{
+                  uploadBtn = await waitFor('button, a, div[role="button"], span', "Upload from URL", 5000);
+              }} catch (e) {{
+                  console.warn("Standard wait failed, trying exhaustive search...");
+                  const all = document.querySelectorAll('*');
+                  for (const el of all) {{
+                      const txt = (el.textContent || '').trim().toLowerCase();
+                      if (txt.includes('upload') && txt.includes('url') && el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE') {{
+                          if (el.onclick || el.getAttribute('role') === 'button' || el.tagName === 'BUTTON' || el.tagName === 'A') {{
+                              uploadBtn = el;
+                              break;
+                          }}
+                      }}
+                  }}
+              }}
+
+              if (!uploadBtn) {{
+                  console.error("Critical: Upload button not found.");
+                  return;
+              }}
+
+              console.log("Analyzer Automation: Found upload button, clicking...", uploadBtn.tagName);
+              uploadBtn.click();
+              
+              if (uploadBtn.parentElement && (uploadBtn.tagName === 'SPAN' || uploadBtn.tagName === 'DIV')) {{
+                  uploadBtn.parentElement.click();
+              }}
+
+              await new Promise(r => setTimeout(r, 500));
+              
+              console.log("Analyzer Automation: Waiting for input field...");
+              
+              // Debug: Log all inputs first to see what's on the page
+              const allInputs = document.querySelectorAll('input');
+              console.log(`Debug: Found ${{allInputs.length}} inputs on page`);
+              allInputs.forEach((inp, i) => {{
+                  console.log(`Debug Input ${{i}}: id="${{inp.id}}", type="${{inp.type}}", placeholder="${{inp.placeholder}}", visible=${{inp.offsetParent !== null}}`);
+              }});
+
+              // Try specific ID from user screenshot first, then broad fallbacks
+              let input = null;
+              try {{
+                input = await waitFor('#file-fetch-url, input[type="url"], input[placeholder*="https"]', null, 5000);
+              }} catch(e) {{
+                 console.warn("Primary input wait failed:", e);
+              }}
+              
+              if (!input) {{
+                  console.error("Error: Could not find Input field! checked #file-fetch-url and others.");
+                  return;
+              }}
+              
+              console.log("Analyzer Automation: Setting URL value...");
+              const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+              if (nativeInputValueSetter) {{
+                  nativeInputValueSetter.call(input, LOG_URL);
+              }} else {{
+                  input.value = LOG_URL;
+              }}
+              input.dispatchEvent(new Event('input', {{ bubbles: true }}));
+              input.dispatchEvent(new Event('change', {{ bubbles: true }}));
+
+              await new Promise(r => setTimeout(r, 500));
+              
+              console.log("Analyzer Automation: Looking for final Upload/Analyze button...");
+              const buttons = document.querySelectorAll('button, a, div[role="button"]');
+              let clicked = false;
+              for (const btn of buttons) {{
+                const txt = (btn.textContent || '').trim().toLowerCase();
+                // Prioritize exact "upload" or "analyze"
+                if (txt === "upload" || txt === "analyze") {{
+                  console.log(`Analyzer Automation: Clicking '${{txt}}' button...`);
+                  btn.click();
+                  clicked = true;
+                  break;
+                }}
+              }}
+              
+              // Fallback to contains if exact match failed
+              if (!clicked) {{
+                   for (const btn of buttons) {{
+                    const txt = (btn.textContent || '').trim().toLowerCase();
+                    if ((txt.includes("upload") || txt.includes("analyze")) && !txt.includes("from url")) {{
+                      console.log(`Analyzer Automation: Clicking fallback '${{txt}}' button...`);
+                      btn.click();
+                      clicked = true;
+                      break;
+                    }}
+                  }}
+              }}
+
+              if (!clicked) {{
+                   console.warn("Final button lookup failed. User must click manually.");
+              }} else {{
+                  console.log("Analyzer Automation: Submit clicked!");
+              }}
+
+            }} catch (err) {{
+              console.error("Analyzer Automation Error:", err.message);
+            }}
+          }}
+
+          // Run automate when DOM is ready or immediately
+          if (document.readyState === 'loading') {{
+              document.addEventListener('DOMContentLoaded', automate);
+          }} else {{
+              automate();
+          }}
+        }})();
+        "#,
+        log_url
+    );
+
+    let window_label = format!("analyzer-window-{}", chrono::Utc::now().timestamp_millis());
+
+    WebviewWindowBuilder::new(
+        &app,
+        &window_label,
+        WebviewUrl::External("https://digyourselfout.app/analyzer".parse().unwrap()),
+    )
+    .title("Log Analyzer")
+    .inner_size(1200.0, 800.0)
+    .center()
+    .initialization_script(&initialization_script)
+    .build()
+    .map_err(|e| format!("Failed to create window: {}", e))?;
+
+    Ok(())
+}

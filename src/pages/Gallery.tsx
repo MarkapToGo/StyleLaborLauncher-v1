@@ -163,7 +163,7 @@ export function Gallery() {
                     <p className="text-xs mt-2">Take screenshots in-game (F2) to see them here.</p>
                 </div>
             ) : (
-                <div className={`overflow-y-auto pb-10 pr-2 custom-scrollbar ${viewMode === 'grid' ? 'grid gap-4' : 'flex flex-col gap-2'}`}
+                <div className={`overflow-y-auto scroll-smooth-container pb-10 pr-2 custom-scrollbar ${viewMode === 'grid' ? 'grid gap-4' : 'flex flex-col gap-2'}`}
                     style={viewMode === 'grid' ? { gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))` } : {}}
                 >
                     <AnimatePresence mode='popLayout'>
