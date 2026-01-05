@@ -454,47 +454,39 @@ export function ProfileLogs() {
                 <div className="w-px h-5 bg-border/50" />
 
                 {/* Scroll to Bottom */}
-                <button
+                <Button
                   onClick={scrollToBottom}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors border bg-bg-tertiary text-white border-border/50 hover:text-white text-xs"
+                  variant="ghost"
+                  size="sm"
                   title="Scroll to Bottom"
+                  leftIcon={<ArrowDownToLine className="w-3.5 h-3.5" />}
                 >
-                  <ArrowDownToLine className="w-3.5 h-3.5" />
-                  <span>Bottom</span>
-                </button>
+                  Bottom
+                </Button>
+
+                <div className="w-px h-5 bg-border/50" />
 
                 {/* Upload to mclo.gs */}
-                <button
+                <Button
                   onClick={handleUploadToMcLogs}
                   disabled={isUploading || !logContent}
-                  className={cn(
-                    "flex items-center gap-1.5 px-2 py-1 rounded transition-colors border text-xs",
-                    isUploading ? "bg-accent/20 text-accent border-accent/50" : "bg-bg-tertiary text-white border-border/50 hover:text-white",
-                    !logContent && "opacity-50 cursor-not-allowed"
-                  )}
+                  variant="secondary"
+                  size="sm"
                   title="Upload to mclo.gs"
+                  isLoading={isUploading && !isUploading /* trick to show spinner if we wanted, but logic is manual below */}
+                  leftIcon={isUploading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
                 >
-                  {isUploading ? (
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                  ) : (
-                    <Upload className="w-3.5 h-3.5" />
-                  )}
-                  <span>{isUploading ? 'Uploading...' : 'MCLogs'}</span>
-                </button>
+                  {isUploading ? 'Uploading...' : 'MCLogs'}
+                </Button>
 
                 {/* Analyze button */}
-                <button
+                <Button
                   onClick={async () => {
                     if (!logContent) return;
-
-                    // Upload if not already uploaded (we don't track state persistent here easily without return value, 
-                    // so we'll just re-upload or upload fresh. A more robust way would be to track returning URL)
-                    // For now, let's just trigger the upload logic, but we need the URL.
-                    // Let's reimplement a quick inline version or modify handleUploadToMcLogs                    
                     setIsUploading(true);
                     try {
                       // Re-using mclogs upload logic
-                      const url = await mclogs.upload(logContent);
+                      let url = await mclogs.upload(logContent);
 
                       // Copy to clipboard internally just in case they want it
                       await import('../lib/tauri').then(m => m.utils.copyToClipboard(url));
@@ -512,21 +504,18 @@ export function ProfileLogs() {
                     }
                   }}
                   disabled={isUploading || !logContent}
-                  className={cn(
-                    "flex items-center gap-1.5 px-2 py-1 rounded transition-colors border text-xs",
-                    isUploading ? "bg-accent/20 text-accent border-accent/50" : "bg-bg-tertiary text-white border-border/50 hover:text-white",
-                    !logContent && "opacity-50 cursor-not-allowed"
-                  )}
+                  variant="primary" // Primary action!
+                  size="sm"
                   title="Open Dig Yourself Out analyzer"
+                  leftIcon={<Search className="w-3.5 h-3.5" />}
                 >
-                  <Search className="w-3.5 h-3.5" />
-                  <span>{isUploading ? 'Preparing...' : 'Analyze'}</span>
-                </button>
+                  {isUploading ? 'Preparing...' : 'Analyze'}
+                </Button>
 
                 <div className="w-px h-5 bg-border/50" />
 
                 {/* Open Folder button */}
-                <button
+                <Button
                   onClick={async () => {
                     if (!profileId) return;
                     try {
@@ -535,12 +524,13 @@ export function ProfileLogs() {
                       error('Failed to open folder', String(err));
                     }
                   }}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded transition-colors border bg-bg-tertiary text-text-muted border-border/50 hover:text-white text-xs"
+                  variant="ghost"
+                  size="sm"
                   title="Open logs folder"
+                  leftIcon={<FolderOpen className="w-3.5 h-3.5" />}
                 >
-                  <FolderOpen className="w-3.5 h-3.5" />
-                  <span>Open Folder</span>
-                </button>
+                  Folder
+                </Button>
               </div>
             )}
           </div>
