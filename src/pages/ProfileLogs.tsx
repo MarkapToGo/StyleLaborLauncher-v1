@@ -180,13 +180,15 @@ export function ProfileLogs() {
       key={file.path}
       onClick={() => setSelectedLog(file.path)}
       className={cn(
-        "w-full p-3 text-left hover:bg-bg-tertiary/50 transition-colors",
-        selectedLog === file.path && "bg-accent/10 border-l-2 border-accent"
+        "w-full p-3 text-left transition-all duration-200 border-l-2",
+        selectedLog === file.path
+          ? "bg-accent/10 border-accent"
+          : "border-transparent text-text-secondary hover:text-white hover:bg-bg-tertiary/50"
       )}
     >
       <div className="flex items-center gap-2">
         {file.is_priority && <Star className="w-3 h-3 text-yellow-400 flex-shrink-0" />}
-        <p className="text-sm font-medium text-white truncate">{file.name}</p>
+        <p className={cn("text-sm font-medium truncate", selectedLog === file.path ? "text-white" : "text-text-secondary group-hover:text-white")}>{file.name}</p>
       </div>
       <div className="flex items-center gap-3 mt-1 text-[10px] text-text-muted">
         <span className="flex items-center gap-1">
@@ -408,12 +410,14 @@ export function ProfileLogs() {
                 </div>
 
                 {/* Level Filters */}
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 bg-bg-tertiary/30 p-1 rounded-lg border border-border/30">
                   <button
                     onClick={() => setLevelFilter('ALL')}
                     className={cn(
-                      "p-1.5 rounded transition-colors border",
-                      levelFilter === 'ALL' ? "bg-accent text-white border-accent" : "bg-bg-tertiary text-white border-border/50 hover:text-white"
+                      "p-1.5 rounded-md transition-all duration-200",
+                      levelFilter === 'ALL'
+                        ? "bg-accent text-white shadow-sm"
+                        : "text-text-muted hover:text-white hover:bg-white/5"
                     )}
                     title="All"
                   >
@@ -422,8 +426,10 @@ export function ProfileLogs() {
                   <button
                     onClick={() => setLevelFilter('INFO')}
                     className={cn(
-                      "p-1.5 rounded transition-colors border",
-                      levelFilter === 'INFO' ? "bg-blue-500 text-white border-blue-500" : "bg-bg-tertiary text-white border-border/50 hover:text-blue-400"
+                      "p-1.5 rounded-md transition-all duration-200",
+                      levelFilter === 'INFO'
+                        ? "bg-blue-500 text-white shadow-sm"
+                        : "text-text-muted hover:text-blue-400 hover:bg-white/5"
                     )}
                     title="Info"
                   >
@@ -432,8 +438,10 @@ export function ProfileLogs() {
                   <button
                     onClick={() => setLevelFilter('WARN')}
                     className={cn(
-                      "p-1.5 rounded transition-colors border",
-                      levelFilter === 'WARN' ? "bg-yellow-500 text-white border-yellow-500" : "bg-bg-tertiary text-white border-border/50 hover:text-yellow-400"
+                      "p-1.5 rounded-md transition-all duration-200",
+                      levelFilter === 'WARN'
+                        ? "bg-yellow-500 text-white shadow-sm"
+                        : "text-text-muted hover:text-yellow-400 hover:bg-white/5"
                     )}
                     title="Warnings"
                   >
@@ -442,8 +450,10 @@ export function ProfileLogs() {
                   <button
                     onClick={() => setLevelFilter('ERROR')}
                     className={cn(
-                      "p-1.5 rounded transition-colors border",
-                      levelFilter === 'ERROR' ? "bg-red-500 text-white border-red-500" : "bg-bg-tertiary text-white border-border/50 hover:text-red-400"
+                      "p-1.5 rounded-md transition-all duration-200",
+                      levelFilter === 'ERROR'
+                        ? "bg-red-500 text-white shadow-sm"
+                        : "text-text-muted hover:text-red-400 hover:bg-white/5"
                     )}
                     title="Errors"
                   >
