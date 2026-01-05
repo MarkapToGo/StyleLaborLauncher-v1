@@ -155,6 +155,7 @@ pub fn run() {
             settings::get_system_memory,
             settings::set_game_data_path,
             settings::clear_cache,
+            settings::factory_reset,
             // MCLogs commands
             mclogs::upload_log,
             // Launcher commands

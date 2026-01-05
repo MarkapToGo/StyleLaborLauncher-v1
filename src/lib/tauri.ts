@@ -68,7 +68,12 @@ export const settings = {
   getSystemMemory: () => invoke<number>('get_system_memory'),
   setGameDataPath: (newPath: string) => invoke<void>('set_game_data_path', { newPath }),
   installJava: () => invoke<string>('install_java_versions'),
-  clearCache: () => invoke<void>('clear_cache'),
+  clearCache: async () => {
+    return invoke('clear_cache');
+  },
+  factoryReset: async () => {
+    return invoke('factory_reset');
+  },
 };
 
 // MCLogs commands

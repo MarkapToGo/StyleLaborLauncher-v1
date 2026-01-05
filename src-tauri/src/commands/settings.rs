@@ -228,3 +228,36 @@ pub async fn clear_cache() -> Result<(), String> {
 
     Ok(())
 }
+
+#[tauri::command]
+pub async fn factory_reset(_app: tauri::AppHandle) -> Result<(), String> {
+    let game_data_path = crate::utils::paths::get_game_data_dir();
+    log::warn!(
+        "INITIATING FACTORY RESET. Wiping directory: {:?}",
+        game_data_path
+    );
+
+    // 1. Wipe everything
+    if game_data_path.exists() {
+        std::fs::remove_dir_all(&game_data_path)
+            .map_err(|e| format!("Failed to delete game data: {}", e))?;
+    }
+
+    // 2. Re-initialize directory structure (empty)
+    crate::utils::paths::init_directories()
+        .map_err(|e| format!("Failed to re-init directories: {}", e))?;
+
+    // 3. Check and wipe launcher dir if it's separate from game data
+    let launcher_dir = crate::utils::paths::get_launcher_dir();
+    if game_data_path != launcher_dir {
+        if launcher_dir.exists() {
+            log::warn!("Wiping launcher directory as well: {:?}", launcher_dir);
+            std::fs::remove_dir_all(&launcher_dir)
+                .map_err(|e| format!("Failed to delete launcher config: {}", e))?;
+            crate::utils::paths::ensure_dir(&launcher_dir)
+                .map_err(|e| format!("Failed to re-init launcher dir: {}", e))?;
+        }
+    }
+
+    Ok(())
+}

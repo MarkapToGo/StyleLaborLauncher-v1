@@ -6,11 +6,14 @@ import {
   Folder,
   Coffee,
   CheckCircle2,
-  Loader2
+  Loader2,
+  Trash2,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { ConfirmModal } from '../components/ui/Modal';
+import { ConfirmModal, Modal } from '../components/ui/Modal';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useAccountStore } from '../stores/accountStore';
@@ -46,6 +49,11 @@ export function Settings() {
   const [isResetting, setIsResetting] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [resolvedPath, setResolvedPath] = useState<string>('');
+
+  // Factory Reset & Danger Zone State
+  const [isDangerZoneOpen, setIsDangerZoneOpen] = useState(false);
+  const [deleteConfirmationInput, setDeleteConfirmationInput] = useState('');
+  const [factoryResetStep, setFactoryResetStep] = useState<'idle' | 'warning' | 'confirm' | 'processing'>('idle');
 
   // Loading states
   const [isLoadingSystemInfo, setIsLoadingSystemInfo] = useState(true);
@@ -811,74 +819,184 @@ export function Settings() {
           </CardContent>
         </Card>
       </motion.div>
-      {/* Troubleshooting */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
+
+      <button
+        type="button"
+        onClick={() => setIsDangerZoneOpen(!isDangerZoneOpen)}
+        className="w-full flex items-center justify-between p-4 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 rounded-lg transition-colors group"
       >
-        <Card hover={false} padding="sm">
-          <CardHeader>
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-md bg-red-500/15 flex items-center justify-center">
-                <div className="w-4 h-4 text-red-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-md bg-red-500/10 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
+            <Trash2 className="w-4 h-4 text-red-500" />
+          </div>
+          <div className="text-left">
+            <h3 className="text-sm font-medium text-red-500 group-hover:text-red-400 transition-colors">Danger Zone</h3>
+            <p className="text-xs text-red-500/60 group-hover:text-red-500/80">Destructive actions and resets</p>
+          </div>
+        </div>
+
+        {isDangerZoneOpen ? (
+          <ChevronUp className="w-4 h-4 text-red-500/50" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-red-500/50" />
+        )}
+      </button>
+
+      {/* Collapsible Content */}
+      <AnimatePresence>
+        {isDangerZoneOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <div className="border-x border-b border-red-500/20 rounded-b-lg -mt-1 pt-4 pb-2 px-2 space-y-2 bg-red-500/5 mx-1">
+              {/* Clear Cache Item */}
+              <div className="flex items-center justify-between p-2 hover:bg-red-500/5 rounded-md transition-colors">
+                <div>
+                  <div className="text-xs font-medium text-text-primary">Clear Cache</div>
+                  <div className="text-[10px] text-text-muted">Removes temporary files. Safe to do.</div>
                 </div>
-              </div>
-              <div>
-                <CardTitle>Troubleshooting</CardTitle>
-                <CardDescription>Fix issues with the launcher</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <label className="block text-xs font-medium text-text-primary mb-0.5">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setIsClearCacheConfirmOpen(true)}
+                >
                   Clear Cache
-                </label>
-                <p className="text-[10px] text-text-muted">
-                  Removes temporary files. Useful if assets are missing or corrupted.
-                </p>
+                </Button>
               </div>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="text-red-400 hover:text-red-300 hover:bg-red-500/10 border-red-500/20"
-                onClick={() => setIsClearCacheConfirmOpen(true)}
-              >
-                Clear Cache
-              </Button>
+
+              {/* Factory Reset Item */}
+              <div className="flex items-center justify-between p-2 hover:bg-red-500/5 rounded-md transition-colors">
+                <div>
+                  <div className="text-xs font-medium text-red-400">Factory Reset</div>
+                  <div className="text-[10px] text-text-muted">Wipes all data, accounts, instances, and settings. Cannot be undone.</div>
+                </div>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => setFactoryResetStep('warning')}
+                >
+                  Factory Reset
+                </Button>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modals */}
       <ConfirmModal
         isOpen={isMoveConfirmOpen}
-        onClose={() => setIsMoveConfirmOpen(false)}
-        onConfirm={confirmMove}
-        title="Move Game Data?"
-        message={`Are you sure you want to move all game data to:\n\n${targetPath}\n\nThis process may take a while depending on your library size. The application might freeze briefly.`}
+        title="Move Game Data"
+        message={`Are you sure you want to move game data to "${targetPath}"? Use this only if you know what you are doing.`}
         confirmText="Move Data"
+        onConfirm={confirmMove}
+        onClose={() => {
+          setIsMoveConfirmOpen(false);
+          setTargetPath(null);
+        }}
         isLoading={isMoving}
       />
-      <ConfirmModal
-        isOpen={isClearCacheConfirmOpen}
-        onClose={() => setIsClearCacheConfirmOpen(false)}
-        onConfirm={handleClearCache}
-        title="Clear Cache?"
-        message="Are you sure you want to clear the cache? This will delete all cached assets and libraries, which will need to be redownloaded."
-        confirmText="Clear Cache"
-        isLoading={isClearing}
-      />
+
       <ConfirmModal
         isOpen={isResetConfirmOpen}
-        onClose={() => setIsResetConfirmOpen(false)}
+        title="Reset Settings"
+        message="Are you sure you want to reset all settings to their default values?"
+        confirmText="Reset"
         onConfirm={confirmReset}
-        title="Reset Settings?"
-        message="Are you sure you want to reset all settings to their default values? This action cannot be undone."
-        confirmText="Reset Settings"
+        onClose={() => setIsResetConfirmOpen(false)}
         isLoading={isResetting}
       />
+
+      <ConfirmModal
+        isOpen={isClearCacheConfirmOpen}
+        title="Clear Cache"
+        message="This will remove temporary files. Your instances and saves will not be affected."
+        confirmText="Clear Cache"
+        onConfirm={handleClearCache}
+        onClose={() => setIsClearCacheConfirmOpen(false)}
+        isLoading={isClearing}
+      />
+
+      {/* Factory Reset - Step 1: Warning */}
+      <ConfirmModal
+        isOpen={factoryResetStep === 'warning'}
+        title="Factory Reset - Warning"
+        message="This will delete EVERYTHING: all worlds, saves, screenshots, modpacks, and accounts. The application will be reset to a fresh state."
+        confirmText="I Understand, Continue"
+        onConfirm={() => setFactoryResetStep('confirm')}
+        onClose={() => setFactoryResetStep('idle')}
+        variant="danger"
+      />
+
+      {/* Factory Reset - Step 2: Final Confirmation */}
+      <Modal
+        isOpen={factoryResetStep === 'confirm'}
+        onClose={() => {
+          setFactoryResetStep('idle');
+          setDeleteConfirmationInput('');
+        }}
+        title="Factory Reset - Final Confirmation"
+        size="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-text-secondary">
+            Are you absolutely sure? This action <span className="text-red-400 font-bold">CANNOT</span> be undone.
+            All your data including worlds and screenshots will be permanently lost.
+          </p>
+
+          <div className="space-y-2">
+            <label className="text-xs text-text-muted block">
+              Type <span className="font-mono text-red-400 font-bold">DELETE</span> to confirm:
+            </label>
+            <input
+              type="text"
+              value={deleteConfirmationInput}
+              onChange={(e) => setDeleteConfirmationInput(e.target.value)}
+              className="input w-full border-red-500/50 focus:border-red-500 text-red-400 placeholder:text-red-500/20"
+              placeholder="DELETE"
+            />
+          </div>
+
+          <div className="flex justify-end gap-2 pt-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                setFactoryResetStep('idle');
+                setDeleteConfirmationInput('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              disabled={deleteConfirmationInput !== 'DELETE' || factoryResetStep === 'processing'}
+              isLoading={factoryResetStep === 'processing'}
+              onClick={async () => {
+                setFactoryResetStep('processing');
+                try {
+                  await settingsApi.factoryReset();
+                  success('Factory Reset Complete', 'All data has been wiped. The application will now restart.');
+                  setTimeout(async () => {
+                    window.location.reload();
+                  }, 2000);
+                } catch (err) {
+                  error('Factory Reset Failed', String(err));
+                  setFactoryResetStep('idle');
+                  setDeleteConfirmationInput('');
+                }
+              }}
+            >
+              WIPE EVERYTHING
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
